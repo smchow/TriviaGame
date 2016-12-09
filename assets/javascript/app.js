@@ -107,27 +107,47 @@ function trivia(category, question, correct_answer, incorrect_answers) {
   
 }// End tag - scientist object
 
+/*function run(){
+            myTimer = setInterval(decrement, 1000);
+      }
+
+      function increment(){
+          counter++;
+          $("#display").html("00:"+ counter);
+      }
+
+      function stop(){
+        console.log("stop");
+        clearInterval(myTimer);
+      }
+      function reset(){
+        clearInterval(myTimer);
+        counter = 0;
+        $("#display").html("00:"+ counter);
+      }*/
+
 
 var text =  '{"response_code":0,"results":[{"category":"Geography","type":"multiple","difficulty":"easy","question":"What is the capital of the American state of Arizona?","correct_answer":"Phoenix","incorrect_answers":["Montgomery","Tallahassee","Raleigh"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"Which state of the United States is the smallest?","correct_answer":"Rhode Island ","incorrect_answers":["Maine","Vermont","Massachusetts"]},{"category":"Geography","type":"multiple","difficulty":"easy","question":"What is the capital of Indonesia?","correct_answer":"Jakarta","incorrect_answers":["Bandung","Medan","Palembang"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"How many counties in the Republic of Ireland.","correct_answer":"26","incorrect_answers":["32","28","30"]},{"category":"Geography","type":"multiple","difficulty":"easy","question":"What is the capital of Jamaica?","correct_answer":"Kingston","incorrect_answers":["San Juan","Port-au-Prince","Bridgetown"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"What is the name of the capital of Turkey?","correct_answer":"Ankara","incorrect_answers":["Istanbul","Izmir","Bursa"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"What is the capital of Australia?","correct_answer":"Canberra","incorrect_answers":["Sydney","Melbourne","Brisbane"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"What African country has Portuguese as its official language?","correct_answer":"Mozambique","incorrect_answers":["Botswana","Gabon","Togo"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"Which of these is NOT an island that is part of the Philippines?","correct_answer":"Java","incorrect_answers":["Luzon","Mindanao","Palawan"]},{"category":"Geography","type":"multiple","difficulty":"medium","question":"What is the capital of the US state Nevada?","correct_answer":"Carson City","incorrect_answers":["Las Vegas","Henderson","Reno"]}]}';
 //  '{"name":"", "fname":"", "ach": ""},'+    
 
 
 var obj = JSON.parse(text);
-var sci_ind = 0;
+//var sci_ind = 0;
 /* 
 **Generate a random number and 
 **Return the scientist at that position from the JSON
 */
-function getRandomName(){ 
-   debugger;
+function getRandomName(sci_ind){ 
+   //debugger;
+   console.log(sci_ind)
   //sci_ind = Math.floor(Math.random()*obj.results.length);
   sci = obj.results[sci_ind];
-  console.log(sci);
+  /*console.log(sci);
   console.log(sci_ind);
   sci_ind++;
   if ( sci_ind >= 10){
     sci_ind = 0;
-  }
+  }*/
   var pickedSci = new trivia(sci.category, sci.question, sci.correct_answer, sci.incorrect_answers);
   return pickedSci;
 }

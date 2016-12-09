@@ -11,10 +11,11 @@
   </head>
   <body>
        <div class="container">
-       <div><h1>TRivia Game</h1>
+       <div><h1>Trivia Game</h1>
          <div class="row">
            <div class="text-center">
               <div class="col-md-12">
+                  <div id="show-number">15 seconds remaining</div>
                   <div id="gameStatus" class="text-center">Wins = 0 <br/> Losses = 0</div>
               </div>
             </div>
@@ -22,7 +23,7 @@
           
           <div class="row myBox" >
             <div class="col-md-12Row myBtn"> 
-              <button id="playButton" class="btn btn-primary btn-xs ">Start New Game</button>
+              <button id="chkButton" class="btn btn-primary btn-xs ">Check Answer</button>
             </div>
             <div class="col-md-6">
                 <div id="details" class="dotBorder">  </div>
@@ -35,6 +36,7 @@
           </div>
         </div>
     
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 	<script type="text/javascript" src="assets/javascript/app.js"></script>
   <script type="text/javascript" >
    	
@@ -60,7 +62,20 @@
 
     // On the final screen, show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
 
+    /*************************
+      1) Start and keep track of total time
+      2) While the timer is running display questions one at a time
+      3) Once the user picks the answer and submits ---
+          -Check if answer is correct
+          - Update Correct and Wrong answer score
+          - Display new question
+      4)  Once the user answeres all questions or runs of time ... 
+          - Say game over
+          - Display final score
 
+
+
+    *******************/
 
 
 
@@ -68,30 +83,76 @@
       var wins = 0;
       var losses = 0;
       var incorrect = 0;
+      var ind =0;
       var display = document.querySelector("#display");
       var status = document.querySelector("#gameStatus");
       var details = document.querySelector("#details");
+      var displayT = document.querySelector("#displayTime");
       var won = false;
+      var Tcounter = 15;
+      var number = 30;
+      var counter;
+
+
+    $("#show-number").html("<h2>" + number + " seconds remaining </h2>");
+     //  Execute the run function.
+    run();
+
+  
+    function run() {
+      counter = setInterval(decrement, 1000);
+    }
+
+    //  The decrement function.
+    function decrement() {
+      number--;
+      $("#show-number").html("<h2>" + number + " seconds remaining </h2>");
+
+      if (number === 0) {    
+        stop();
+        $("#show-number").append("<h2> Time Up! </h2>");
+      }
+    }
+
+    //  The stop function
+    function stop() {
+      clearInterval(counter);
+    }
+
       //var sci_ind = -1;
       display.innerHTML = "Welcome Welcome";
       
-      setInterval(myTimeoutFunction, 4000);
+      //setInterval(myTimeoutFunction, 1000);
+      
+    
+     /* function myTimeoutFunction(){
+            console.log("counter - myTimeoutFunction" + Tcounter);
 
-      function myTimeoutFunction(){
-        var myScientist = getRandomName();
-        var text = myScientist.question;
+            displayT.innerHTML("00:"+ Tcounter);
+            Tcounter--;
+          }*/
+
+      function myTimeoutFunctionTemp(ind){
+
+        var trivia = getRandomName(ind);
+        
+        var text = trivia.question;
         var pos = Math.floor(Math.random()*3);
         //console.log(pos);
         for (var i = 0; i < 3 ; i++){
           //sdebugger;
-          if(i==pos){
-            text += "<br/>" +  myScientist.correct_answer + "<br/>";
-          }
-          text += "<br/>" +  myScientist.incorrect_answers[i] + "<br/>";
-        }
+          //var radioBtn = $('<input type="radio" name="rbtnCount" />');
 
-        
+          if(i==pos){
+
+            text += "<br/>" +  trivia.correct_answer + "<br/>";
+          }
+          text += "<br/>" +  trivia.incorrect_answers[i] + "<br/>";
+        }
         display.innerHTML = text;
+        //radioBtn.appendTo(display);
+            
+        
         //setInterval(someFunction, 4000);
       }
 
@@ -99,12 +160,19 @@
         display.innerHTML = "Some Text";
       }
       //Start game when button is clicked;
-      var x = document.getElementById("playButton");
+      var x = document.getElementById("chkButton");
       x.addEventListener("click", function(){    
-        var myScientist = getRandomName();
+       /* var myScientist = getRandomName();
         document.getElementById("details").innerHTML = "";
-        myScientist.playGame("");
+        myScientist.playGame("");*/
+        console.log("Remaining Time" + number);
+        //while(ind < 10){
+          myTimeoutFunctionTemp(ind);
+          //console.log(myScientist);
+          ind++;
+        //}
 
+        
         // When user enters a letter play the game!
         /*document.onkeyup = function(event){
         if (myScientist.chkInput(event)){
