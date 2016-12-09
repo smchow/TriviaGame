@@ -84,7 +84,7 @@
       var losses = 0;
       var incorrect = 0;
       var ind =0;
-      var display = document.querySelector("#display");
+      var display = $("#display");
       var status = document.querySelector("#gameStatus");
       var details = document.querySelector("#details");
       var displayT = document.querySelector("#displayTime");
@@ -135,21 +135,38 @@
       function myTimeoutFunctionTemp(ind){
 
         var trivia = getRandomName(ind);
-        
-        var text = trivia.question;
+        display.empty();
+        var q = $("<div>").text(trivia.question);
+        q.appendTo(display);
         var pos = Math.floor(Math.random()*3);
         //console.log(pos);
         for (var i = 0; i < 3 ; i++){
-          //sdebugger;
+          
           //var radioBtn = $('<input type="radio" name="rbtnCount" />');
+          
 
+          console.log(i,pos);
           if(i==pos){
-
-            text += "<br/>" +  trivia.correct_answer + "<br/>";
+           // debugger; 
+             var d = $("<div>");
+            console.log(trivia.correct_answer );
+            d.text( trivia.correct_answer );
+            var radioBtn = $('<input type="radio" name="rbtnCount" />');
+          radioBtn.appendTo(display);
+          d.appendTo(display);
+            
           }
-          text += "<br/>" +  trivia.incorrect_answers[i] + "<br/>";
+
+            var d = $("<div>");
+            d.text( trivia.incorrect_answers[i] );
+            var radioBtn = $('<input type="radio" name="rbtnCount" />');
+          radioBtn.appendTo(display);
+          d.appendTo(display);
+          
+          
+          
         }
-        display.innerHTML = text;
+        //display.innerHTML = text;
         //radioBtn.appendTo(display);
             
         
@@ -166,11 +183,14 @@
         document.getElementById("details").innerHTML = "";
         myScientist.playGame("");*/
         console.log("Remaining Time" + number);
-        //while(ind < 10){
+        if (ind < 10 && number > 0){
           myTimeoutFunctionTemp(ind);
-          //console.log(myScientist);
-          ind++;
-        //}
+         
+          
+        } else{
+          display.innerHTML = "Game Over";
+        }
+        ind++;
 
         
         // When user enters a letter play the game!
