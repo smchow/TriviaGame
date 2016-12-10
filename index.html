@@ -192,6 +192,13 @@
         }
         ind++;
 
+        $("button").click(function(){
+            alert("The button was clicked.");
+            var myRadio = $('input[name=rbtnCount]');
+            console.log(myRadio);
+            var checkedValue = myRadio.filter(':checked').val();
+            console.log(checkedValue);
+        });
         
         // When user enters a letter play the game!
         /*document.onkeyup = function(event){
