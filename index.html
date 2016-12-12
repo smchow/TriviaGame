@@ -127,8 +127,16 @@
             d.appendTo(display);
       }
       function myTimeoutFunctionTemp(ind){
+        
+           /* var d = $("<div>");
 
+            d.text( "The correct answer is : " + trivia.correct_answer);
+            d.appendTo(display);*/
         var trivia = getRandomName(ind);
+        
+       
+        setTimeout(function(){
+
         display.empty();
         var q = $("<div>").text(trivia.question);
         q.appendTo(display);
@@ -144,8 +152,9 @@
             // debugger; 
             var d = $("<div>");
             console.log(trivia.correct_answer );
+            var x = trivia.correct_answer;
             d.text( trivia.correct_answer );
-            var radioBtn = $('<input type="radio" name="rbtnCount" value=4 >');
+            var radioBtn = $('<input type="radio" type="rbtnCount" value=4 name="'+ x +  '" ">'  );
             radioBtn.appendTo(display);
             d.appendTo(display);
             
@@ -153,13 +162,13 @@
 
             var d = $("<div>");
             d.text( trivia.incorrect_answers[i] );
-            var radioBtn = $('<input type="radio" name="rbtnCount" value='+i + ' >');
+            var radioBtn = $('<input type="radio" type="rbtnCount" value='+i + ' name='+ trivia.incorrect_answers[i] +  ' >');
             radioBtn.appendTo(display);
             d.appendTo(display);
         }
         //display.innerHTML = text;
         //radioBtn.appendTo(display);
-            
+      }, 4000); 
         
         //setInterval(someFunction, 4000);
       }
@@ -176,24 +185,52 @@
         myScientist.playGame("");*/
         console.log("Remaining Time" + number);
         //if (first == false){
-              var myRadio = $('input[name=rbtnCount]');
+              //var myRadio = $('input[name=rbtnCount]');
+               var myRadio = $('input[type=radio]');
+              var correct_ans ="";
+            
             for (var i = 0 ; i < 4; i++){
+              
               //console.log(myRadio[i].checked);
-              if (myRadio[i].checked == true){
-                if (myRadio[i].value == "4"){
-                  console.log("You are right");
-                  correct++;
-                }else{
-                  console.log("You are wrong");
-                  incorrect++;
+              if (myRadio[i].value == "4"){
+                  //debugger;
+                  if (myRadio[i].checked == true){
+                    correct_ans ="You are right!";
+                    correct++;
+                  }
+                  
+                  //setTimeout(function(){ console.log("Hello"); }, 3000);
+                  correct_ans += "The correct answer is" +  myRadio[i].name;
+                  //debugger;
+                  
+              } else{
+                  if (myRadio[i].checked == true){
+                    incorrect++;
+                    correct_ans = "You are wrong! " + correct_ans;
+                  }
+                  
+                  //setTimeout(function(){ console.log("Hello"); }, 3000);
+                  
                 }
               }
-            }
+            
+            display.empty();
+            var d = $("<div>");
+            
+            d.text(  correct_ans );
+            
+            d.appendTo(display);
+             
+            //d.text( trivia.correct_answer);
+            //var radioBtn = $('<input type="radio" name="rbtnCount" value='+i + ' >');
+            //radioBtn.appendTo(display);
+            
         //}
-        //first = false;
+        //
         if (ind < 10 && number > 0){
+
           myTimeoutFunctionTemp(ind);
-         
+          //first = false;
           
         } else{
           display.innerHTML = "Game Over";
