@@ -73,6 +73,8 @@
       var Tcounter = 15;
       var number = 30;
       var counter;
+      var first = true;
+      //
 
 
     $("#show-number").html("<h2>" + number + " seconds remaining </h2>");
@@ -134,7 +136,19 @@
             d.appendTo(display);*/
         var trivia = getRandomName(ind);
         
-       
+        var n = 4;
+        if (first ){
+            n = 1;
+             console.log(n);
+        } else{
+            n = 4;
+           console.log(n);
+           
+        }
+        first = false;
+        console.log(first);
+        
+         
         setTimeout(function(){
 
         display.empty();
@@ -168,7 +182,7 @@
         }
         //display.innerHTML = text;
         //radioBtn.appendTo(display);
-      }, 4000); 
+      }, n*1000); 
         
         //setInterval(someFunction, 4000);
       }
@@ -178,7 +192,7 @@
       }
       //Start game when button is clicked;
       var x = document.getElementById("chkButton");
-      var first = true;
+
       x.addEventListener("click", function(){    
        /* var myScientist = getRandomName();
         document.getElementById("details").innerHTML = "";
@@ -200,7 +214,7 @@
                   }
                   
                   //setTimeout(function(){ console.log("Hello"); }, 3000);
-                  correct_ans += "The correct answer is" +  myRadio[i].name;
+                  correct_ans += "The correct answer is " +  myRadio[i].name;
                   //debugger;
                   
               } else{
@@ -230,7 +244,7 @@
         if (ind < 10 && number > 0){
 
           myTimeoutFunctionTemp(ind);
-          //first = false;
+          
           
         } else{
           display.innerHTML = "Game Over";
