@@ -147,24 +147,21 @@
 
           console.log(i,pos);
           if(i==pos){
-           // debugger; 
-             var d = $("<div>");
+            // debugger; 
+            var d = $("<div>");
             console.log(trivia.correct_answer );
             d.text( trivia.correct_answer );
-            var radioBtn = $('<input type="radio" name="rbtnCount" />');
-          radioBtn.appendTo(display);
-          d.appendTo(display);
+            var radioBtn = $('<input type="radio" name="rbtnCount" value=4 >');
+            radioBtn.appendTo(display);
+            d.appendTo(display);
             
           }
 
             var d = $("<div>");
             d.text( trivia.incorrect_answers[i] );
-            var radioBtn = $('<input type="radio" name="rbtnCount" />');
-          radioBtn.appendTo(display);
-          d.appendTo(display);
-          
-          
-          
+            var radioBtn = $('<input type="radio" name="rbtnCount" value='+i + ' >');
+            radioBtn.appendTo(display);
+            d.appendTo(display);
         }
         //display.innerHTML = text;
         //radioBtn.appendTo(display);
@@ -178,11 +175,27 @@
       }
       //Start game when button is clicked;
       var x = document.getElementById("chkButton");
+      var first = true;
       x.addEventListener("click", function(){    
        /* var myScientist = getRandomName();
         document.getElementById("details").innerHTML = "";
         myScientist.playGame("");*/
         console.log("Remaining Time" + number);
+        if (first == false)
+        {
+              var myRadio = $('input[name=rbtnCount]');
+            for (var i = 0 ; i < 4; i++){
+              //console.log(myRadio[i].checked);
+              if (myRadio[i].checked == true){
+                if (myRadio[i].value == "4"){
+                  console.log("You are right");
+                }else{
+                  console.log("You are wrong");
+                }
+              }
+            }
+        }
+        first = false;
         if (ind < 10 && number > 0){
           myTimeoutFunctionTemp(ind);
          
@@ -193,11 +206,9 @@
         ind++;
 
         $("button").click(function(){
-            alert("The button was clicked.");
-            var myRadio = $('input[name=rbtnCount]');
-            console.log(myRadio);
-            var checkedValue = myRadio.filter(':checked').val();
-            console.log(checkedValue);
+            //alert("The button was clicked.");
+            
+            
         });
         
         // When user enters a letter play the game!
