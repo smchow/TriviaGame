@@ -10,25 +10,25 @@
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
   <body>
-       <div class="container">
+       <div class="container jumbotron">
        <div><h1>Trivia Game</h1>
          <div class="row">
            <div class="text-center">
               <div class="col-md-12">
                   <div id="show-number">15 seconds remaining</div>
-                  <div id="gameStatus" class="text-center">Wins = 0 <br/> Losses = 0</div>
+                  
               </div>
             </div>
           </div>
           
           <div class="row myBox" >
-            <div class="col-md-12Row myBtn"> 
-              <button id="chkButton" class="btn btn-primary btn-xs ">Check Answer</button>
+            <div class="col-md-12 text-center myBtn"> 
+              <button id="chkButton" class="btn btn-primary btn-xs text-center ">Check Answer</button>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div id="details" class="dotBorder">  </div>
-            </div>
-            <div class="col-md-6">
+            </div> -->
+            <div class="col-md-12">
                 <div class="text-center">  
                   <div id="display" class="dotBorder"></div>
                 </div>
@@ -80,7 +80,7 @@
 
 
 
-      var wins = 0;
+      var correct = 0;
       var losses = 0;
       var incorrect = 0;
       var ind =0;
@@ -101,6 +101,8 @@
   
     function run() {
       counter = setInterval(decrement, 1000);
+      myTimeoutFunctionTemp(ind);
+      ind++;
     }
 
     //  The decrement function.
@@ -110,13 +112,14 @@
 
       if (number === 0) {    
         stop();
-        $("#show-number").append("<h2> Time Up! </h2>");
+        $("#show-number").html("<h2> Time Up! </h2>");
       }
     }
 
     //  The stop function
     function stop() {
       clearInterval(counter);
+      showResults();
     }
 
       //var sci_ind = -1;
@@ -131,7 +134,17 @@
             displayT.innerHTML("00:"+ Tcounter);
             Tcounter--;
           }*/
+      function showResults(){
 
+          var d = $("<div>");
+            var textStr = "Your Results: <br/> Correct Answers: " ;
+            textStr += correct + " <br/>";
+            textStr += "InCorrect Answers:"
+            textStr += incorrect + " <br/>";
+            d.html( textStr);
+             display.empty();
+            d.appendTo(display);
+      }
       function myTimeoutFunctionTemp(ind){
 
         var trivia = getRandomName(ind);
@@ -145,7 +158,7 @@
           //var radioBtn = $('<input type="radio" name="rbtnCount" />');
           
 
-          console.log(i,pos);
+          //console.log(i,pos);
           if(i==pos){
             // debugger; 
             var d = $("<div>");
@@ -181,21 +194,22 @@
         document.getElementById("details").innerHTML = "";
         myScientist.playGame("");*/
         console.log("Remaining Time" + number);
-        if (first == false)
-        {
+        //if (first == false){
               var myRadio = $('input[name=rbtnCount]');
             for (var i = 0 ; i < 4; i++){
               //console.log(myRadio[i].checked);
               if (myRadio[i].checked == true){
                 if (myRadio[i].value == "4"){
                   console.log("You are right");
+                  correct++;
                 }else{
                   console.log("You are wrong");
+                  incorrect++;
                 }
               }
             }
-        }
-        first = false;
+        //}
+        //first = false;
         if (ind < 10 && number > 0){
           myTimeoutFunctionTemp(ind);
          
