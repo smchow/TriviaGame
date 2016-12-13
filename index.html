@@ -17,7 +17,7 @@
               <div class="col-md-12">
                   <div id="show-number">15 seconds remaining</div>
                    <div class="col-md-12 myBtn"> 
-            <button id="chkButton" class="btn btn-primary btn-xs">Check Answer</button>
+            <button id="chkButton" class="btn  btn-xs">Check Answer</button>
             </div>
               </div>
             </div>
@@ -67,11 +67,11 @@ $(document).ready(function() {
       var ind =0;
       var display = $("#display");
      // var status = document.querySelector("#gameStatus");
-      var details = document.querySelector("#details");
+     // var details = document.querySelector("#details");
       var displayT = document.querySelector("#displayTime");
       var won = false;
       var Tcounter = 15;
-      var number = 30;
+      var number = 60;
       var counter;
       var first = true;
       //
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
       if (number === 0) {    
         stop();
-        $("#show-number").html("<h2> Time Up! </h2>");
+        $("#show-number").html("<h2> Time's Up! </h2>");
       }
     }
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
       function showResults(){
           $("#chkButton").hide();
           var d = $("<div>");
-            var textStr = "<br/> <br/> Your Results: <br/><br/>  Correct Answers: " ;
+            var textStr = "<br/>  Your Results: <br/> <br/> Correct Answers: " ;
             textStr += correct + " <br/><br/> ";
             textStr += "Incorrect/Unanswered: "
             textStr += 10-correct + " <br/>";
@@ -136,21 +136,17 @@ $(document).ready(function() {
             d.text( "The correct answer is : " + trivia.correct_answer);
             d.appendTo(display);*/
         var trivia = getRandomName(ind);
-        
         var n = 4;
         if (first ){
             n = 0;
         } else{
-            n = 4;
+            n = 2;
         }
         first = false;
          
         setTimeout(function(){
 
         display.empty();
-        // var nb = $("<button>");
-        // nb.attr("id", "chkButton").text("Check Answer");
-        // nb.appendTo(display);
          $("#chkButton").show();
         var q = $("<div>").text(trivia.question);
         q.appendTo(display);
@@ -164,21 +160,24 @@ $(document).ready(function() {
           //console.log(i,pos);
           if(i==pos){
             // debugger; 
-            var d = $("<div>");
-            console.log(trivia.correct_answer );
+            var parent = $("<div>");
+            var d = $("<span>");
+            //console.log(trivia.correct_answer );
             var x = trivia.correct_answer;
             d.text( trivia.correct_answer );
             var radioBtn = $('<input type="radio" type="rbtnCount" value=4 name="'+ x +  '" ">'  );
-            radioBtn.appendTo(display);
-            d.appendTo(display);
+            radioBtn.appendTo(parent);
+            d.appendTo(parent);
+            parent.appendTo(display);
             
           }
-
-            var d = $("<div>");
+            var parent = $("<div>");
+            var d = $("<span>");
             d.text( trivia.incorrect_answers[i] );
             var radioBtn = $('<input type="radio" type="rbtnCount" value='+i + ' name='+ trivia.incorrect_answers[i] +  ' >');
-            radioBtn.appendTo(display);
-            d.appendTo(display);
+            radioBtn.appendTo(parent);
+            d.appendTo(parent);
+            parent.appendTo(display);
         }
         //display.innerHTML = text;
         //radioBtn.appendTo(display);
@@ -211,7 +210,7 @@ $(document).ready(function() {
               if (myRadio[i].value == "4"){
                   //debugger;
                   if (myRadio[i].checked == true){
-                    correct_ans ="You are right!";
+                    correct_ans ="You are right! ";
                     correct++;
                   }
                   
