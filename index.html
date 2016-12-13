@@ -17,7 +17,7 @@
               <div class="col-md-12">
                   <div id="show-number">15 seconds remaining</div>
                    <div class="col-md-12 myBtn"> 
-              <button id="chkButton" class="btn btn-primary btn-xs">Check Answer</button>
+            <button id="chkButton" class="btn btn-primary btn-xs">Check Answer</button>
             </div>
               </div>
             </div>
@@ -58,7 +58,7 @@
 
     *******************/
 
-
+$(document).ready(function() {
 
 
       var correct = 0;
@@ -66,7 +66,7 @@
       var incorrect = 0;
       var ind =0;
       var display = $("#display");
-      var status = document.querySelector("#gameStatus");
+     // var status = document.querySelector("#gameStatus");
       var details = document.querySelector("#details");
       var displayT = document.querySelector("#displayTime");
       var won = false;
@@ -106,7 +106,7 @@
     }
 
       //var sci_ind = -1;
-      display.innerHTML = "Welcome Welcome";
+      //display.innerHTML = "Welcome Welcome";
       
       //setInterval(myTimeoutFunction, 1000);
       
@@ -118,16 +118,17 @@
             Tcounter--;
           }*/
       function showResults(){
-
+          $("#chkButton").hide();
           var d = $("<div>");
-            var textStr = "Your Results: <br/> Correct Answers: " ;
-            textStr += correct + " <br/>";
-            textStr += "InCorrect Answers:"
-            textStr += incorrect + " <br/>";
+            var textStr = "<br/> <br/> Your Results: <br/><br/>  Correct Answers: " ;
+            textStr += correct + " <br/><br/> ";
+            textStr += "Incorrect/Unanswered: "
+            textStr += 10-correct + " <br/>";
             d.html( textStr);
              display.empty();
             d.appendTo(display);
       }
+
       function myTimeoutFunctionTemp(ind){
         
            /* var d = $("<div>");
@@ -138,20 +139,19 @@
         
         var n = 4;
         if (first ){
-            n = 1;
-             console.log(n);
+            n = 0;
         } else{
             n = 4;
-           console.log(n);
-           
         }
         first = false;
-        console.log(first);
-        
          
         setTimeout(function(){
 
         display.empty();
+        // var nb = $("<button>");
+        // nb.attr("id", "chkButton").text("Check Answer");
+        // nb.appendTo(display);
+         $("#chkButton").show();
         var q = $("<div>").text(trivia.question);
         q.appendTo(display);
         var pos = Math.floor(Math.random()*3);
@@ -190,10 +190,12 @@
       function someFunction(){
         display.innerHTML = "Some Text";
       }
-      //Start game when button is clicked;
-      var x = document.getElementById("chkButton");
 
-      x.addEventListener("click", function(){    
+      //Start game when button is clicked;
+     // var x = document.getElementById("chkButton");
+
+     // x.addEventListener("click", function(){ 
+     $("#chkButton").on("click", function() {   
        /* var myScientist = getRandomName();
         document.getElementById("details").innerHTML = "";
         myScientist.playGame("");*/
@@ -229,6 +231,7 @@
               }
             
             display.empty();
+             $("#chkButton").hide();
             var d = $("<div>");
             
             d.text(  correct_ans );
@@ -254,7 +257,6 @@
         $("button").click(function(){
             //alert("The button was clicked.");
             
-            
         });
         
         // When user enters a letter play the game!
@@ -264,6 +266,8 @@
           } 
         }*/
       });
+    });
+
     </script>
   </body>
 </html>
