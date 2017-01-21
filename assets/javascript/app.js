@@ -1,3 +1,213 @@
+$(document).ready(function() {
+
+
+      var correct = 0;
+      var losses = 0;
+      var incorrect = 0;
+      var ind =0;
+      var display = $("#display");
+     // var status = document.querySelector("#gameStatus");
+     // var details = document.querySelector("#details");
+      var displayT = document.querySelector("#displayTime");
+      var won = false;
+      var Tcounter = 15;
+      var number = 60;
+      var counter;
+      var first = true;
+      //
+
+
+    $("#show-number").html("<h2>" + number + " seconds remaining </h2>");
+     //  Execute the run function.
+    run();
+
+  
+    function run() {
+      counter = setInterval(decrement, 1000);
+      myTimeoutFunctionTemp(ind);
+      ind++;
+    }
+
+    //  The decrement function.
+    function decrement() {
+      number--;
+      $("#show-number").html("<h2>" + number + " seconds remaining </h2>");
+
+      if (number === 0) {    
+        stop();
+        $("#show-number").html("<h2> Time's Up! </h2>");
+      }
+    }
+
+    //  The stop function
+    function stop() {
+      clearInterval(counter);
+      showResults();
+    }
+
+      //var sci_ind = -1;
+      //display.innerHTML = "Welcome Welcome";
+      
+      //setInterval(myTimeoutFunction, 1000);
+      
+    
+     /* function myTimeoutFunction(){
+            console.log("counter - myTimeoutFunction" + Tcounter);
+
+            displayT.innerHTML("00:"+ Tcounter);
+            Tcounter--;
+          }*/
+      function showResults(){
+          $("#chkButton").hide();
+          var d = $("<div>");
+            var textStr = "<br/>  Your Results: <br/> <br/> Correct Answers: " ;
+            textStr += correct + " <br/><br/> ";
+            textStr += "Incorrect/Unanswered: "
+            textStr += 10-correct + " <br/>";
+            d.html( textStr);
+             display.empty();
+            d.appendTo(display);
+      }
+
+      function myTimeoutFunctionTemp(ind){
+        
+           /* var d = $("<div>");
+
+            d.text( "The correct answer is : " + trivia.correct_answer);
+            d.appendTo(display);*/
+        var trivia = getRandomName(ind);
+        var n = 4;
+        if (first ){
+            n = 0;
+        } else{
+            n = 2;
+        }
+        first = false;
+         
+        setTimeout(function(){
+
+        display.empty();
+         $("#chkButton").show();
+        var q = $("<div>").text(trivia.question);
+        q.appendTo(display);
+        var pos = Math.floor(Math.random()*3);
+        //console.log(pos);
+        for (var i = 0; i < 3 ; i++){
+          
+          //var radioBtn = $('<input type="radio" name="rbtnCount" />');
+          
+
+          //console.log(i,pos);
+          if(i==pos){
+            // debugger; 
+            var parent = $("<div>");
+            var d = $("<span>");
+            //console.log(trivia.correct_answer );
+            var x = trivia.correct_answer;
+            d.text( trivia.correct_answer );
+            var radioBtn = $('<input type="radio" type="rbtnCount" value=4 name="'+ x +  '" ">'  );
+            radioBtn.appendTo(parent);
+            d.appendTo(parent);
+            parent.appendTo(display);
+            
+          }
+            var parent = $("<div>");
+            var d = $("<span>");
+            d.text( trivia.incorrect_answers[i] );
+            var radioBtn = $('<input type="radio" type="rbtnCount" value='+i + ' name='+ trivia.incorrect_answers[i] +  ' >');
+            radioBtn.appendTo(parent);
+            d.appendTo(parent);
+            parent.appendTo(display);
+        }
+        //display.innerHTML = text;
+        //radioBtn.appendTo(display);
+      }, n*1000); 
+        
+        //setInterval(someFunction, 4000);
+      }
+
+      function someFunction(){
+        display.innerHTML = "Some Text";
+      }
+
+      //Start game when button is clicked;
+     // var x = document.getElementById("chkButton");
+
+     // x.addEventListener("click", function(){ 
+     $("#chkButton").on("click", function() {   
+       /* var myScientist = getRandomName();
+        document.getElementById("details").innerHTML = "";
+        myScientist.playGame("");*/
+        console.log("Remaining Time" + number);
+        //if (first == false){
+              //var myRadio = $('input[name=rbtnCount]');
+               var myRadio = $('input[type=radio]');
+              var correct_ans ="";
+            
+            for (var i = 0 ; i < 4; i++){
+              
+              //console.log(myRadio[i].checked);
+              if (myRadio[i].value == "4"){
+                  //debugger;
+                  if (myRadio[i].checked == true){
+                    correct_ans ="You are right! ";
+                    correct++;
+                  }
+                  
+                  //setTimeout(function(){ console.log("Hello"); }, 3000);
+                  correct_ans += "The correct answer is " +  myRadio[i].name;
+                  //debugger;
+                  
+              } else{
+                  if (myRadio[i].checked == true){
+                    incorrect++;
+                    correct_ans = "You are wrong! " + correct_ans;
+                  }
+                  
+                  //setTimeout(function(){ console.log("Hello"); }, 3000);
+                  
+                }
+              }
+            
+            display.empty();
+             $("#chkButton").hide();
+            var d = $("<div>");
+            
+            d.text(  correct_ans );
+            
+            d.appendTo(display);
+             
+            //d.text( trivia.correct_answer);
+            //var radioBtn = $('<input type="radio" name="rbtnCount" value='+i + ' >');
+            //radioBtn.appendTo(display);
+            
+        //}
+        //
+        if (ind < 10 && number > 0){
+
+          myTimeoutFunctionTemp(ind);
+          
+          
+        } else{
+          display.innerHTML = "Game Over";
+        }
+        ind++;
+
+        $("button").click(function(){
+            //alert("The button was clicked.");
+            
+        });
+        
+        // When user enters a letter play the game!
+        /*document.onkeyup = function(event){
+        if (myScientist.chkInput(event)){
+          myScientist.playGame(event.key.toLowerCase());
+          } 
+        }*/
+      });
+    });
+
+
 
 /* Creating scientist object and all related methods*/
 function trivia(category, question, correct_answer, incorrect_answers) {
@@ -10,11 +220,9 @@ function trivia(category, question, correct_answer, incorrect_answers) {
   this.numGuesses = 10;
   this.error = " ";
 
-
-  /* The user has entered a letter . So start playing and give feedback to the user*/
     this.playGame =  function(key){
 
-      //console.log("Should I continue" + this.guessCorrect + "Guesses = "  + this.numGuesses);
+      
       if (this.numGuesses > 0 && !(this.guessCorrect) ){
             this.newGuess(key);
           	display.innerHTML = this.getPartWord() + "<br/> <br/>Your Letter Guesses: " + this.guesses + 
@@ -26,7 +234,7 @@ function trivia(category, question, correct_answer, incorrect_answers) {
 
     /*Update the guesses array and total number of guesses variable.
       Check if the user has exceeded the number of guesses and determine
-      if they have lost. Win logic in getPartWord() */
+      if they have lost. */
    this.newGuess = function(key){
    	  if (key==""){
    	  		return;
